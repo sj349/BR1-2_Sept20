@@ -3,4 +3,287 @@ title: "Steph Jordan BR1&2 Problem Set"
 output: html_notebook
 ---
 
+## Chapter 1 Excercises
+
+## 1.1
+a. The prior information in this case would be that chocolate syrup exists.
+b. Milk comes from cows.
+c. Milk comes from cows, and to make chocolate milk, one adds chocolate syrup to it.
+
+## 1.2
+a. #bringthebackgroundtotheforeground
+b. #leavethepastinthepast
+
+## 1.3
+```{r}
+library(DiagrammeR)
+library(tidyverse)
+
+# Create our visualization
+tree <-
+    create_graph() %>% # initiate graph
+    add_n_nodes(
+      n = 5, 
+      type = "path",
+      label = c("The small coffee costs $2.00", "The medium coffee costs $2.25, and is 1.5x bigger than the small", "The medium coffee is a better deal than the small", "The large coffee is $2.35, and is 1.25x bigger than the medium", "Large coffee is the best deal, but is a lot of coffee..."), 
+      # Labels for each node
+      node_aes = node_aes(
+        shape = "oval",
+        height = 1,
+        width = 3,
+        fontcolor='black',
+        x = c(0, 4, 0, 4, 0), # Just the heights of each node (so it looks like a tree)
+        y = c(0, 0, -2, -2, -4))) %>% 
+    add_edge(
+      from = 1,
+      to = 3) %>% 
+  add_edge(
+      from = 2,
+      to = 3) %>% 
+  add_edge(
+      from = 3,
+      to = 5)%>% 
+  add_edge(
+      from = 4,
+      to = 5)
+render_graph(tree)
+```
+
+## 1.4
+```{r}
+
+# Create our visualization
+tree <-
+    create_graph() %>% # initiate graph
+    add_n_nodes(
+      n = 3, 
+      type = "path",
+      label = c("My roommate thought it snowed a lot in NC", "I showed her the average snowfall for the past 3 years", "She agreed that it didn't snow very much"), 
+      # Labels for each node
+        node_aes = node_aes(
+        shape = "oval",
+        height = 1,
+        width = 3,
+        fontcolor='black',
+        x = c(0, 2, 0), # Just the heights of each node (so it looks like a tree)
+        y = c(0, 0, -2))) %>% 
+    add_edge(
+      from = 1,
+      to = 3) %>% 
+    add_edge(
+      from = 2,
+      to = 3)
+
+render_graph(tree)
+```
+
+## 1.5
+```{r}
+# Create our visualization
+tree <-
+    create_graph() %>% # initiate graph
+    add_n_nodes(
+      n = 7, 
+      type = "path",
+      label = c("Feel neutral about Bayesian stats", "Learn about use of Bayesian in disease tests", "Very interested in Bayesian stats", "Do an excercise with Bayesian stats and ant eggs", "Disgusted & disinterested in Bayesian stats", "Take Bayes class with good prof", "Exceptionally interested in topic"), 
+      # Labels for each node
+      node_aes = node_aes(
+        shape = "oval",
+        height = 1,
+        width = 3,
+        fontcolor='black',
+        x = c(0, 4, 0, 4, 0, 4, 0), # Just the heights of each node (so it looks like a tree)
+        y = c(0, 0, -2, -2, -4, -4, -6))) %>% 
+    add_edge(
+      from = 1,
+      to = 3) %>% 
+  add_edge(
+      from = 2,
+      to = 3) %>% 
+  add_edge(
+      from = 3,
+      to = 5)%>% 
+  add_edge(
+      from = 4,
+      to = 5)%>% 
+  add_edge(
+      from = 5,
+      to = 6)%>% 
+  add_edge(
+      from = 5,
+      to = 7)
+render_graph(tree)
+```
+
+## 1.6
+a. The question answered with frequentist thinking is: what is the probability that someone with the qualifications will get the job, and the converse: what is the probability that someone without the qualifications will get the job.
+
+b. The question answered with Bayesian thinking is: Given that you have the qualifications, what is the probability that you will get the job. 
+
+c. The Bayesian question is the one I would be interested in, because I know I have the qualifications, so I'm interested in the conditional probability -- that is, in taking into account my qualifications as *prior* information. 
+
+## 1.7
+
+a. Caamp (the alt-folk band)
+b. I expect the ticket prices for Caamp concerts to increase in the next 3 years.
+c. Caamp is moderately popular right now, but increasing in popularity; therefore, I think the conclusion will be that the hypothesis is true. 
+d. The Bayesian, because I know the trend in Caamp's growing popularity is true, so this can serve as "prior" information. 
+
+## 1.8
+
+a. Why is Bayesian statistics useful?
+Bayesian statistics is useful because it allows us to calculate probabilities that incorporate relevant background information. This is a more accurate modeling of "real-world" problems, for often we want to know more than the probability of A *and* B happening -- we're interested in how the occurence of B affects the probability of A also occuring. Because of the decisions we have to make everyday to achieve a desired outcome (say we're curious about how to attain outcome A), it is often more useful for us to know how B affects our chances of getting there (the conditional probability) rather than the overall chances of B and A both occuring (the frequentist probability).
+
+
+b. What are the similarities between Bayesian and frequentist statistics? 
+According to BR Chapter 2, "a Bayesian analysis assesses the uncertainty of the hypothesis in light of the observed data, and a frequentist analysis assesses the uncertainty of the observed data in light of an assumed hypothesis." In this sense, both Bayesian and frequentist statistics  rely on individual probabilities of events and some "observed data." The analyses differ in their fundamental assumptions--Bayesian assesses the likelihood of the hypothesis being true given the observed data, and frequentist seeks to explore, given an assumed hypothesis, how likely is it that I would observe the given data.  
+
+## Chapter 2 Excercises
+
+## 2.1 
+
+a. The posterior probability is higher than the prior probability in this case, because if you know that you like the first novel by Benn, then it's more likely that you will enjoy the newest novel by the same author. 
+
+b. The prior probability is higher in this case, because if we know that it was 0 degrees the day prior, then its not very likely to be 60 degrees on the next day. If we only assessed the prior probability (that is will be 60 degrees tomorrow) without any background information about the month we're in or the prior day's temperature, for all we know, it could be summer, and the probability could be very high!
+
+c.  The posterior probability is higher than the prior probability in this case, because the authors are much more likely to make typos if they haven't gotten sufficient sleep the night before they write.
+
+d.  The posterior probability is higher than the prior probability in this case, because tweets with hashtags attached to them are more likely to be noticed and retweeted. Therefore, the probability of retweet given the presence of hashtags is higher than the pure probability of getting retweeted.
+
+## 2.2
+
+a. conditional
+b. marginal
+c. marginal
+d. conditional
+e. joint
+f. conditional
+
+## 2.3
+
+Below is a useful set of criteria for using a binomial model (from https://sphweb.bumc.bu.edu/otlt/mph-modules/bs/bs704_probability/bs704_probability7.html).
+
+Use of the binomial distribution requires three assumptions:
+
+Each replication of the process results in one of two possible outcomes (success or failure),
+The probability of success is the same for each replication, and
+The replications are independent, meaning here that a success in one patient does not influence the probability of success in another.
+
+
+a. The Binomial model is not appropriate for this question because we don't know the probability of an individual baby being born (we only know the average number born per hour).
+
+b. The Binomial model is as follows:
+$$ f(y|0.9) = C(27, y)(0.9)^y(0.1)^{27-y} \text { for y in } [0, 1, 2...27] $$
+
+c. The Binomial model is as follows:
+$$ f(y|0.17) = C(n, y)(0.17)^y(0.83)^{n-y} \text { for y in } [0, 1, 2...n] $$
+d. The Binomial model is not appropriate for this question, because there aren't two outcomes. The question is asking for estimates of the *amount* of time Henry is late to the date; if the question were interested in the *number* of times he were late, then a Binomial model would be appropriate.
+
+e. The Binomial model is not appropriate for this question, because Y does not estimate a probability. It estimates the number of successful outcomes.
+
+f. The Binomial model is as follows:
+$$ f(y|0.8) = C(60, y)(0.8)^y(0.2)^{60-y} \text { for y in } [0, 1, 2...60] $$
+## 2.4 
+We'll use Theorem 2.3.6 in BH Chapter 2 and the following equation:
+
+$$ P(V|S)=\frac {P(S|V)*P(V)}{P(S)}$$ 
+```{r}
+#prob vampires are real
+P_V=0.05
+P_notV=1-P_V
+#prob of sparkle given vamps
+P_S_given_V=0.7
+P_S_given_notV=0.03
+
+#use law of total probability to find P(S)
+P_S=P_S_given_notV*P_notV+P_S_given_V*P_V
+
+P_V_given_S=(P_S_given_V*P_V)/P_S
+
+P_V_given_S
+
+
+
+
+```
+
+## 2.5
+
+Loading all base probabilities
+```{r}
+#prob infected
+P_I=0.18
+
+#prob not infected
+P_notI=1-P_I
+#prob maple
+P_M_given_I=0.8
+#prob elm
+P_E_given_I=0.15
+#prob other
+P_O_given_I=0.05
+
+P_E_given_notI=0.2
+
+P_M_given_notI=0.1
+
+P_O_given_notI=0.7
+
+
+
+```
+a. 0.18
+
+b. We'll use the law of total probability (as used above).
+```{r}
+P_M=P_M_given_notI*P_notI+P_M_given_I*P_I
+P_M
+```
+
+c. Finding probability that selected tree has mold given that it's maple.
+```{r}
+P_I_given_M=(P_M_given_I*P_I)/P_M
+P_I_given_M
+```
+
+d. The probability that the tree has mold increased with the added information that the tree is a maple. This is because amongst infected trees, 80% are maple, so the added information that the tree is maple caused the probability that the tree was infected to increase.
+
+## 2.6 
+
+We need to know the following probabilities: amongst the restaruants she likes, what's the percentage of 4 stars; amongst the restaruants she does not like, what's the percentage of 4 stars.
+
+## 2.7 
+a. We'll use the law of total probability again
+```{r}
+P_NB=0.2*0.08+0.1*0.92
+P_NB
+```
+
+b. We'll use theorem 2.3.6 in BH Chapter 2
+```{r}
+P_R_given_NB=(0.2*0.08)/P_NB
+P_R_given_NB
+```
+
+
+## 2.8
+a. We'll again use theorem 2.3.6 in BH Chapter 2
+
+```{r}
+P_D_given_M=(0.4*0.15)/0.3
+P_D_given_M
+```
+
+b. We'll use the law of total probabilities to solve for P(M|~D)
+```{r}
+P_M=0.3
+P_M_given_D=0.4
+P_notD=0.85
+P_D=0.15
+
+P_M_given_notD=(P_M-P_M_given_D*P_D)/P_notD
+P_M_given_notD
+```
+
+## 2.9
 

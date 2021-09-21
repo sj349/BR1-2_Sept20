@@ -286,4 +286,426 @@ P_M_given_notD
 ```
 
 ## 2.9
+a. Filling in probability table:
+```{r}
+#finding totals
+P_zero=0.05*0.4+0.13*0.6
+P_45=0.84*0.4+0.86*0.6
+P_over45=0.11*0.4+0.01*0.6
+
+good <- c(0.05, 0.84, 0.11, 0.4)
+bad <- c(0.13, 0.86, 0.01, 0.6)
+total <-c(P_zero, P_45, P_over45, P_zero+P_45+P_over45)
+df <- data.frame(good_mood=good, bad_mood=bad, total=total)
+df
+```
+b. The probability that your roommate is in a good mood is 40%. This is the prior odds.
+
+c. The probability that they received 50 texts if they're in a good mood is 0.11. This part is the likelihood part of Bayes' Rule.
+
+d. We will use Bayes Rule to find the posterior probability.
+```{r}
+P_over45_given_G=0.11
+P_G=0.4
+P_G_given_over45=(P_over45_given_G*P_G)/P_over45
+P_G_given_over45
+```
+
+
+## 2.10
+a. We will use the law of total probability
+```{r}
+prob_LGBTQ=0.105*0.915+0.1*0.085
+prob_LGBTQ
+```
+
+b. We will use Bayes Rule
+```{r}
+Prob_rural=0.085
+prob_LGBTQ_given_rural=0.1
+prob_rural_given_LGBTQ=(prob_LGBTQ_given_rural*Prob_rural)/prob_LGBTQ
+prob_rural_given_LGBTQ
+```
+c. Again, we'll use Bayes rule
+```{r}
+Prob_rural=0.085
+prob_straight_given_rural=0.9
+prob_straight=0.9*0.085+0.895*0.915
+prob_rural_given_straight=(prob_straight_given_rural*Prob_rural)/prob_straight
+prob_rural_given_straight
+```
+
+## 2.11
+
+a. The Binomial model is as follows:
+$$ f(y|\pi) = C(6, y)(\pi)^y(1-\pi)^{6-y} \text { for y in } [0, 1, 2...6] $$
+
+b. We can plug into the above equation as follows:
+$$ f(4|0.3) = C(6, 4)(0.3)^4(0.7)^{2}  $$
+```{r}
+total=choose(6,4)*(0.3)^4*(0.7)^2
+total
+```
+c. First, we need to find the likelihood of y=4 for all values of pi. So, we are calculating L(\pi| y=4)
+```{r}
+pi <- c(0.3, 0.4, 0.5)
+likelihoods <- c()
+for (i in pi){
+  f=15*(i)^4*(1-i)^2
+  likelihoods <- c(likelihoods, f)
+}
+likelihoods
+```
+Then, we need to find the normalizing constant.
+```{r}
+#multiply likelihoods by f(pi) value given in table
+NC=likelihoods[1]*0.25+likelihoods[2]*0.6+likelihoods[3]*0.15
+NC
+```
+Now we can calculate the posterior probabilities for each \pi value:
+```{r}
+pi1=(0.25*likelihoods[1])/NC
+pi2=(0.6*likelihoods[2])/NC
+pi3=(0.15*likelihoods[3])/NC
+pi1
+pi2
+pi3
+```
+
+## 2.12
+
+a. The Binomial model is as follows:
+$$ f(y|\pi) = C(7, y)(\pi)^y(1-\pi)^{7-y} \text { for y in } [0, 1, 2...7] $$
+b. We can plug into the above equation for y=1 as follows:
+$$ f(\pi|y=1) = C(7,1)(\pi)^1(1-\pi)^{6}  = 7\pi(1-\pi)^{6} \text { for } \pi 
+\text { in } [0.1, 0.25, 0.4]$$
+First, we need to find the likelihood of y=1 for all values of \pi:
+```{r}
+pi <- c(0.1, 0.25, 0.4)
+likelihoods <- c()
+for (i in pi){
+  f=7*(i)*(1-i)^6
+  likelihoods <- c(likelihoods, f)
+}
+likelihoods
+```
+Then, we need to find the normalizing constant.
+```{r}
+#multiply likelihoods by f(pi) value given in table
+NC=likelihoods[1]*0.2+likelihoods[2]*0.45+likelihoods[3]*0.35
+NC
+```
+Now we can calculate the posterior probabilities for each \pi value:
+```{r}
+pi1=(0.2*likelihoods[1])/NC
+pi2=(0.45*likelihoods[2])/NC
+pi3=(0.35*likelihoods[3])/NC
+pi1
+pi2
+pi3
+```
+
+c. The values for all values of \pi are lower in the prior model than in the posterior for \pi=0.1 and \pi=0.25; for \pi=0.4, the value in the posterior model is lower than in the prior. However, in the prior and posterior models, \pi=0.25 is most likely.  
+
+d. First, we need to recalculate the normalizing constant
+Then, we need to find the normalizing constant.
+```{r}
+#multiply likelihoods by f(pi) value given in table
+NC=likelihoods[1]*0.15+likelihoods[2]*0.15+likelihoods[3]*0.7
+NC
+```
+Now we can calculate the posterior probabilities for each \pi value:
+```{r}
+pi1=(0.15*likelihoods[1])/NC
+pi2=(0.15*likelihoods[2])/NC
+pi3=(0.7*likelihoods[3])/NC
+pi1
+pi2
+pi3
+```
+In Kris' model, \pi=0.4 is the most likely. The distribution is more skewed towards higher probabilities in Kris' model than in Miles'.
+
+## 2.13
+
+a. My guess is that f(0.5) will be higher than the prior model suggests, since upon a survey of 80 adults, she found about 50% of them were lactose intolerant. Since it skews more towards 40% than 60%, I also would give f(0.4) a higher probability. Therefore, I expect a distribution that looks more like:
+f(0.4)=0.25, f(0.5)=0.45, f(0.6)=0.2, f(0.7)=0.1
+
+b. First, we need to develop the binomial model:
+```{r}
+total=choose(80,47)*(pi)^47*(1-pi)^33
+```
+
+
+Next, we find the likelihood of y=47 for all values of \pi:
+```{r}
+pi <- c(0.4, 0.5, 0.6, 0.7)
+likelihoods <- c()
+for (i in pi){
+  f=choose(80,47)*(i)^47*(1-i)^33
+  likelihoods <- c(likelihoods, f)
+}
+likelihoods
+```
+Then, we need to find the normalizing constant.
+```{r}
+#multiply likelihoods by f(pi) value given in table
+NC=likelihoods[1]*0.1+likelihoods[2]*0.2+likelihoods[3]*0.44+likelihoods[4]*0.26
+NC
+```
+Now we can calculate the posterior probabilities for each \pi value:
+```{r}
+pi1=(0.1*likelihoods[1])/NC
+pi2=(0.2*likelihoods[2])/NC
+pi3=(0.44*likelihoods[3])/NC
+pi4=(0.26*likelihoods[4])/NC
+pi1
+pi2
+pi3
+pi4
+```
+
+These values were far more skewed towards \pi=0.6 as the most popular value than I expected. The value for \pi=0.4 is much lower than I expected.
+
+c. Let's first see how this change in sample size would impact the likelihoods
+```{r}
+pi <- c(0.4, 0.5, 0.6, 0.7)
+likelihoods <- c()
+for (i in pi){
+  f=choose(800,470)*(i)^470*(1-i)^330
+  likelihoods <- c(likelihoods, f)
+}
+likelihoods
+```
+This makes the likelihoods even lower, which means the posterior probabilities will also be lower with this larger sample size.
+
+## 2.14
+a. The prior model for \pi is as follows
+```{r}
+pis <- c(0.15, 0.25, 0.5, 0.75, 0.85)
+f <- c(0.15, 0.15, 0.4, 0.15, 0.15)
+df <- data.frame(pis=pis, f_pi=f)
+df
+```
+
+b. In 13 days, the bus was late 3 times.The model is as follows:
+```{r}
+total=choose(13,3)*(pi)^3*(1-pi)^10
+```
+Next, we find the likelihood for y=3 across all values of \pi:
+```{r}
+pi <- c(0.15, 0.25, 0.5, 0.75, 0.85)
+likelihoods <- c()
+for (i in pi){
+  f=choose(13,3)*(i)^3*(1-i)^10
+  likelihoods <- c(likelihoods, f)
+}
+likelihoods
+```
+Then, we need to find the normalizing constant.
+```{r}
+#multiply likelihoods by f(pi) value given in table
+NC=likelihoods[1]*0.15+likelihoods[2]*0.15+likelihoods[3]*0.4+likelihoods[4]*0.15+likelihoods[5]*0.15
+NC
+```
+Now we can calculate the posterior probabilities for each \pi value:
+```{r}
+pi1=(0.15*likelihoods[1])/NC
+pi2=(0.15*likelihoods[2])/NC
+pi3=(0.4*likelihoods[3])/NC
+pi4=(0.15*likelihoods[4])/NC
+pi5=(0.15*likelihoods[5])/NC
+pi1
+pi2
+pi3
+pi4
+pi5
+```
+c. Li Qiang learned that the likelihoods of the bus being late 15-25% of the time is higher than she expected. The likelihood of the bus being late 50% of the time is lower than she expected.
+
+## 2.15
+
+a. If the researcher had been more sure that hatchlings would survive, the range of pi probabilities in the prior model would have been more skewed towards 1 (e.g. ranging from 0.8 to 1).
+
+b. If the researcher had been more sure that hatchlings would survive, the range of pi probabilities in the prior model would have been more skewed towards 0 (e.g. ranging from 0 to 0.5).
+
+c. In 13 days, the bus was late 3 times.The model is as follows:
+```{r}
+total=choose(15,10)*(pi)^10*(1-pi)^5
+```
+Next, we find the likelihood ratios:
+```{r}
+pi <- c(0.6, 0.65, 0.7, 0.75)
+likelihoods <- c()
+for (i in pi){
+  f=choose(15,10)*(i)^10*(1-i)^5
+  likelihoods <- c(likelihoods, f)
+}
+likelihoods
+```
+Then, we need to find the normalizing constant.
+```{r}
+#multiply likelihoods by f(pi) value given in table
+NC=likelihoods[1]*0.3+likelihoods[2]*0.4+likelihoods[3]*0.2+likelihoods[4]*0.1
+NC
+```
+Now we can calculate the posterior probabilities for each \pi value:
+```{r}
+pi1=(0.3*likelihoods[1])/NC
+pi2=(0.4*likelihoods[2])/NC
+pi3=(0.2*likelihoods[3])/NC
+pi4=(0.1*likelihoods[4])/NC
+pi1
+pi2
+pi3
+pi4
+```
+
+d. The posterior model demonstrates the probability of a 0.6, 0.65, 0.7, and 0.75 survival rate for hatchlings, given the fact that we observed a 10/15 survival rate in our empirical observations.
+
+
+
+## 2.16
+
+a. Defining our own prior model. We begin with a threshold of 40% fakes, because this is a happy medium between the lowest stat mentioned (20) and the next lowest stat mentioned (50%). We go all the way up to a maximum of 80% because this is a medium between the second highest stat mentioned (70%: "a Swiss art-research lab...claims that more than 70 percent of the work it checks out turn out to be fake") and the highest stat mentioned (90%). We make 60% and 80%  more likely because 70% is mentioned most often in the article. 
+```{r}
+pis <- c(0.4, 0.6, 0.8)
+f <- c(0.2, 0.4, 0.4)
+df <- data.frame(pis=pis, f_pi=f)
+df
+```
+
+b. The bookest prior used a lower minimum threshold and a lower maximum threshold. They also disributed f(\pi) more equally across all values.
+
+c. First, we need to construct the binomial model. The model is as follows:
+
+$$f(y|\pi)=C(10,y)*(0.6)^{y}*(0.4)^{10-y}$$
+
+Next, we find the likelihood ratios. We'll start by testing y=5, and see if we need to increase or decrease y from there to reach our goal of 0.1
+```{r}
+pi <- c(0.2, 0.4, 0.6)
+likelihoods <- c()
+for (i in pi){
+  f=choose(10,5)*(i)^{5}*(1-i)^{10-5}
+  likelihoods <- c(likelihoods, f)
+}
+likelihoods
+```
+Then, we need to find the normalizing constant.
+```{r}
+#multiply likelihoods by f(pi) value given in table
+NC=likelihoods[1]*0.25+likelihoods[2]*0.5+likelihoods[3]*0.25
+NC
+```
+Now we can calculate the posterior probabilities for \pi = 0.6:
+```{r}
+pi3=(0.25*likelihoods[3])/NC
+
+pi3
+```
+Looks like we need to increase y! We'll try 6.
+```{r}
+pi <- c(0.2, 0.4, 0.6)
+likelihoods <- c()
+for (i in pi){
+  f=choose(10,6)*(i)^{6}*(1-i)^{10-6}
+  likelihoods <- c(likelihoods, f)
+}
+likelihoods
+```
+Then, we need to find the normalizing constant.
+```{r}
+#multiply likelihoods by f(pi) value given in table
+NC=likelihoods[1]*0.25+likelihoods[2]*0.5+likelihoods[3]*0.25
+NC
+```
+Now we can calculate the posterior probabilities for \pi = 0.6:
+```{r}
+pi3=(0.25*likelihoods[3])/NC
+
+pi3
+```
+We've found our value! We need y=6 in order for f(\pi=0.6|Y=y)>0.4 to be true.
+
+## Simulation Exercises
+
+## 2.18
+
+```{r}
+# Define possible success probabilities
+lactose <- data.frame(pi = c(0.4, 0.5, 0.6, 0.7))
+
+# Define the prior model
+prior <- c(0.10, 0.2, 0.44, 0.26)
+
+# Simulate 10000 values of pi from the prior: simulate 10000 different pis based on the probabilities represented in the prior model for each value of pi
+set.seed(84735)
+lactose_sim <- sample_n(lactose, size = 10000, weight = prior, replace = TRUE)
+
+```
+For each of the previously created 10,000 values of \pi, we can simulate 80 games and record the number of wins Y. Since we know y's dependence on \pi follows a binomial model, we can use the rbinom() function with size=80 and prob=pi.
+```{r}
+# Simulate 10000 lactose intolerance outcomes
+lactose_sim <- lactose_sim %>% 
+  mutate(y = rbinom(10000, size = 80, prob = pi))
+
+# Check it out
+lactose_sim %>% 
+  head(3)
+
+```
+Check out the percentage breakdown for each \pi value
+```{r}
+library(janitor)
+lactose_sim %>% 
+  tabyl(pi) %>% 
+  adorn_totals("row")
+```
+These probabilites are quite close to our prior model!
+
+Now, let's check out the probability of Fatima's observed results (y=47):
+```{r}
+lactose_47 <- lactose_sim %>% 
+  filter(y == 47)
+
+
+# Summarize the posterior approximation
+lactose_47 %>% 
+  tabyl(pi) %>% 
+  adorn_totals("row")
+```
+Fascinatingly, it appears that y=47 occurs 0% of the time for \pi=0.4. This is interesting. It actually lines up with the posterior values we calculated earlier, which were skewed away from \pi=0.4 and towards \pi=0.6): \pi=0.4: 0.0006491288, \pi=0.5: 0.1135404, \pi=0.6: 0.8337986, \pi=0.7: 0.05201189. 
+
+## 2.19 
+We'll repeat the same simulation process for the cuckoo birds problem.
+
+```{r}
+# Define possible success probabilities
+birds <- data.frame(pi = c(0.6, 0.65, 0.7, 0.75))
+
+# Define the prior model
+prior <- c(0.3, 0.4, 0.2, 0.1)
+
+# Simulate 10000 values of pi from the prior: simulate 10000 different pis based on the probabilities represented in the prior model for each value of pi
+set.seed(84735)
+birds_sim <- sample_n(birds, size = 10000, weight = prior, replace = TRUE)
+
+```
+For each of the previously created 10,000 values of \pi, we can simulate X games and record the number of wins Y. Since we know y's dependence on \pi follows a binomial model, we can use the rbinom() function with size=? and prob=pi.
+```{r}
+# Simulate 10000 lactose intolerance outcomes
+lactose_sim <- lactose_sim %>% 
+  mutate(y = rbinom(10000, size = 80, prob = pi))
+
+# Check it out
+lactose_sim %>% 
+  head(3)
+
+```
+Check out the percentage breakdown for each \pi value
+```{r}
+library(janitor)
+lactose_sim %>% 
+  tabyl(pi) %>% 
+  adorn_totals("row")
+```
 

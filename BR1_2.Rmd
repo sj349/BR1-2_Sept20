@@ -1,20 +1,24 @@
 ---
 title: "Steph Jordan BR1&2 Problem Set"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
-## Chapter 1 Excercises
+# Chapter 1 Exercises
 
 ## 1.1
-a. The prior information in this case would be that chocolate syrup exists.
-b. Milk comes from cows.
-c. Milk comes from cows, and to make chocolate milk, one adds chocolate syrup to it.
+a. The prior information in this case would be that milk comes from cows.
+b. The incoming data would be: chocolate syrup exists.
+c. The updated conclusion would be: Milk comes from cows, and to make chocolate milk, one adds chocolate syrup to it.
 
 ## 1.2
 a. #bringthebackgroundtotheforeground
 b. #leavethepastinthepast
 
+
 ## 1.3
+Visualizing coffee choices.
 ```{r}
 library(DiagrammeR)
 library(tidyverse)
@@ -50,6 +54,7 @@ render_graph(tree)
 ```
 
 ## 1.4
+Visualizing changing someone's mind.
 ```{r}
 
 # Create our visualization
@@ -58,12 +63,13 @@ tree <-
     add_n_nodes(
       n = 3, 
       type = "path",
-      label = c("My roommate thought it snowed a lot in NC", "I showed her the average snowfall for the past 3 years", "She agreed that it didn't snow very much"), 
+      label = c("Roommate thought it snowed a lot in NC", "I showed her annual average snowfall", "She agreed it doesnt snow much"),
       # Labels for each node
         node_aes = node_aes(
         shape = "oval",
         height = 1,
-        width = 3,
+        width = 2,
+        fontsize = "7",
         fontcolor='black',
         x = c(0, 2, 0), # Just the heights of each node (so it looks like a tree)
         y = c(0, 0, -2))) %>% 
@@ -78,6 +84,7 @@ render_graph(tree)
 ```
 
 ## 1.5
+Visualizing author's relationship to Bayesian stats.
 ```{r}
 # Create our visualization
 tree <-
@@ -120,25 +127,25 @@ a. The question answered with frequentist thinking is: what is the probability t
 
 b. The question answered with Bayesian thinking is: Given that you have the qualifications, what is the probability that you will get the job. 
 
-c. The Bayesian question is the one I would be interested in, because I know I have the qualifications, so I'm interested in the conditional probability -- that is, in taking into account my qualifications as *prior* information. 
+c. The Bayesian question is the one I would be interested in, because I know I have the qualifications, so I'm interested in the conditional probability -- that is, in taking into account my qualifications as *prior* information relative to my outcome. 
 
 ## 1.7
 
-a. Caamp (the alt-folk band)
-b. I expect the ticket prices for Caamp concerts to increase in the next 3 years.
-c. Caamp is moderately popular right now, but increasing in popularity; therefore, I think the conclusion will be that the hypothesis is true. 
-d. The Bayesian, because I know the trend in Caamp's growing popularity is true, so this can serve as "prior" information. 
+a. Topic: Caamp (the alt-folk band)
+b. Hypothesis: I expect the ticket prices for Caamp concerts to increase in the next 3 years.
+c. Background information: Caamp is moderately popular right now, but increasing in popularity; therefore, I think the conclusion will be that the hypothesis is true. 
+d. I'm using the Bayesian framework here, because I know the trend in Caamp's growing popularity is true, so this can serve as "prior" information relative to their future ticket prices. 
 
 ## 1.8
 
 a. Why is Bayesian statistics useful?
-Bayesian statistics is useful because it allows us to calculate probabilities that incorporate relevant background information. This is a more accurate modeling of "real-world" problems, for often we want to know more than the probability of A *and* B happening -- we're interested in how the occurence of B affects the probability of A also occuring. Because of the decisions we have to make everyday to achieve a desired outcome (say we're curious about how to attain outcome A), it is often more useful for us to know how B affects our chances of getting there (the conditional probability) rather than the overall chances of B and A both occuring (the frequentist probability).
+Bayesian statistics is useful because it allows us to calculate probabilities that incorporate relevant background information. This is a more accurate modeling of "real-world" problems, for often we want to know more than the probability of A *and* B happening -- we're interested in how the occurence of B affects the probability of a later outcome, A. Because of the decisions we have to make everyday to achieve a desired outcome (say we're curious about the best way to attain outcome A), it is often more useful for us to know how B affects our chances of getting there (the conditional probability) rather than the overall chances of B and A both occuring.
 
 
 b. What are the similarities between Bayesian and frequentist statistics? 
-According to BR Chapter 2, "a Bayesian analysis assesses the uncertainty of the hypothesis in light of the observed data, and a frequentist analysis assesses the uncertainty of the observed data in light of an assumed hypothesis." In this sense, both Bayesian and frequentist statistics  rely on individual probabilities of events and some "observed data." The analyses differ in their fundamental assumptions--Bayesian assesses the likelihood of the hypothesis being true given the observed data, and frequentist seeks to explore, given an assumed hypothesis, how likely is it that I would observe the given data.  
+According to BR Chapter 2, "a Bayesian analysis assesses the uncertainty of the hypothesis in light of the observed data, and a frequentist analysis assesses the uncertainty of the observed data in light of an assumed hypothesis." In this sense, both Bayesian and frequentist approaches rely on individual probabilities of events and some "observed data." The analyses differ in their fundamental assumptions--Bayesian assesses the likelihood of the hypothesis being true given the observed data, and frequentist seeks to explore, given an assumed hypothesis, how likely it is that the observed data would in fact be observed.
 
-## Chapter 2 Excercises
+# Chapter 2 Excercises
 
 ## 2.1 
 
@@ -170,21 +177,27 @@ The probability of success is the same for each replication, and
 The replications are independent, meaning here that a success in one patient does not influence the probability of success in another.
 
 
-a. The Binomial model is not appropriate for this question because we don't know the probability of an individual baby being born (we only know the average number born per hour).
+a. The Binomial model is not appropriate for this question because we don't know the probability of an individual baby being born.
 
 b. The Binomial model is as follows:
+$$ Y|\pi \text{~}  Bin(27, \pi)$$
+The conditional pmf is:
 $$ f(y|0.9) = C(27, y)(0.9)^y(0.1)^{27-y} \text { for y in } [0, 1, 2...27] $$
 
 c. The Binomial model is as follows:
+$$ Y|\pi \text{~}  Bin(n, \pi)$$
+The conditional pmf is:
 $$ f(y|0.17) = C(n, y)(0.17)^y(0.83)^{n-y} \text { for y in } [0, 1, 2...n] $$
-d. The Binomial model is not appropriate for this question, because there aren't two outcomes. The question is asking for estimates of the *amount* of time Henry is late to the date; if the question were interested in the *number* of times he were late, then a Binomial model would be appropriate.
+d. The Binomial model is not appropriate for this question, because there aren't two outcomes: the question is asking for estimates of the *amount* of time Henry is late to the date, not whether he is late. If the question were interested in the *number* of times he were late, then a Binomial model would be appropriate.
 
-e. The Binomial model is not appropriate for this question, because Y does not estimate a probability. It estimates the number of successful outcomes.
+e. A Binomial model is not appropriate for this question, because Y is measuring a probability, not a number of outcomes.
 
 f. The Binomial model is as follows:
+$$ Y|\pi \text{~}  Bin(60, \pi)$$
+The conditional pmf is:
 $$ f(y|0.8) = C(60, y)(0.8)^y(0.2)^{60-y} \text { for y in } [0, 1, 2...60] $$
 ## 2.4 
-We'll use Theorem 2.3.6 in BH Chapter 2 and the following equation:
+We'll use Theorem 2.3.6 in BH Chapter 2 and Bayes rule:
 
 $$ P(V|S)=\frac {P(S|V)*P(V)}{P(S)}$$ 
 ```{r}
@@ -201,9 +214,6 @@ P_S=P_S_given_notV*P_notV+P_S_given_V*P_V
 P_V_given_S=(P_S_given_V*P_V)/P_S
 
 P_V_given_S
-
-
-
 
 ```
 
@@ -229,12 +239,10 @@ P_M_given_notI=0.1
 
 P_O_given_notI=0.7
 
-
-
 ```
-a. 0.18
+a. This is equal to P_I: 0.18.
 
-b. We'll use the law of total probability (as used above).
+b. We'll use the law of total probability.
 ```{r}
 P_M=P_M_given_notI*P_notI+P_M_given_I*P_I
 P_M
@@ -250,16 +258,16 @@ d. The probability that the tree has mold increased with the added information t
 
 ## 2.6 
 
-We need to know the following probabilities: amongst the restaruants she likes, what's the percentage of 4 stars; amongst the restaruants she does not like, what's the percentage of 4 stars.
+We need to know the following additional information: among the restaurants she does not like, what's the percentage of fewer than 4 star restaurants.
 
 ## 2.7 
-a. We'll use the law of total probability again
+a. We'll use the law of total probability:
 ```{r}
 P_NB=0.2*0.08+0.1*0.92
 P_NB
 ```
 
-b. We'll use theorem 2.3.6 in BH Chapter 2
+b. We'll use Bayes Rule:
 ```{r}
 P_R_given_NB=(0.2*0.08)/P_NB
 P_R_given_NB
@@ -267,14 +275,14 @@ P_R_given_NB
 
 
 ## 2.8
-a. We'll again use theorem 2.3.6 in BH Chapter 2
+a. We'll again use Bayes Rule:
 
 ```{r}
 P_D_given_M=(0.4*0.15)/0.3
 P_D_given_M
 ```
 
-b. We'll use the law of total probabilities to solve for P(M|~D)
+b. We'll use Bayes Rule and the law of total probabilities to solve for P(M|~D)
 ```{r}
 P_M=0.3
 P_M_given_D=0.4
@@ -313,13 +321,13 @@ P_G_given_over45
 
 
 ## 2.10
-a. We will use the law of total probability
+a. We will use the law of total probability:
 ```{r}
 prob_LGBTQ=0.105*0.915+0.1*0.085
 prob_LGBTQ
 ```
 
-b. We will use Bayes Rule
+b. We will use Bayes Rule:
 ```{r}
 Prob_rural=0.085
 prob_LGBTQ_given_rural=0.1
@@ -338,10 +346,13 @@ prob_rural_given_straight
 ## 2.11
 
 a. The Binomial model is as follows:
+$$ Y|\pi \text{~}  Bin(6, \pi)$$
+The conditional pmf is as follows:
 $$ f(y|\pi) = C(6, y)(\pi)^y(1-\pi)^{6-y} \text { for y in } [0, 1, 2...6] $$
 
 b. We can plug into the above equation as follows:
 $$ f(4|0.3) = C(6, 4)(0.3)^4(0.7)^{2}  $$
+Plugging in these values yields:
 ```{r}
 total=choose(6,4)*(0.3)^4*(0.7)^2
 total
@@ -375,6 +386,8 @@ pi3
 ## 2.12
 
 a. The Binomial model is as follows:
+$$ Y|\pi \text{~} Bin(7, \pi)$$
+the conditional pmf is:
 $$ f(y|\pi) = C(7, y)(\pi)^y(1-\pi)^{7-y} \text { for y in } [0, 1, 2...7] $$
 b. We can plug into the above equation for y=1 as follows:
 $$ f(\pi|y=1) = C(7,1)(\pi)^1(1-\pi)^{6}  = 7\pi(1-\pi)^{6} \text { for } \pi 
@@ -642,7 +655,7 @@ set.seed(84735)
 lactose_sim <- sample_n(lactose, size = 10000, weight = prior, replace = TRUE)
 
 ```
-For each of the previously created 10,000 values of \pi, we can simulate 80 games and record the number of wins Y. Since we know y's dependence on \pi follows a binomial model, we can use the rbinom() function with size=80 and prob=pi.
+For each of the previously created 10,000 values of \pi, we can simulate 80 people and record the number of lactose intolerances Y. Since we know y's dependence on \pi follows a binomial model, we can use the rbinom() function with size=80 and prob=pi.
 ```{r}
 # Simulate 10000 lactose intolerance outcomes
 lactose_sim <- lactose_sim %>% 
@@ -690,22 +703,34 @@ set.seed(84735)
 birds_sim <- sample_n(birds, size = 10000, weight = prior, replace = TRUE)
 
 ```
-For each of the previously created 10,000 values of \pi, we can simulate X games and record the number of wins Y. Since we know y's dependence on \pi follows a binomial model, we can use the rbinom() function with size=? and prob=pi.
+For each of the previously created 10,000 values of \pi, we can simulate 15 hatchlings and record the number of survivals Y. Since we know y's dependence on \pi follows a binomial model, we can use the rbinom() function with size=15 and prob=pi.
 ```{r}
 # Simulate 10000 lactose intolerance outcomes
-lactose_sim <- lactose_sim %>% 
-  mutate(y = rbinom(10000, size = 80, prob = pi))
+birds_sim <- birds_sim %>% 
+  mutate(y = rbinom(10000, size = 15, prob = pi))
 
 # Check it out
-lactose_sim %>% 
+birds_sim %>% 
   head(3)
 
 ```
 Check out the percentage breakdown for each \pi value
 ```{r}
-library(janitor)
-lactose_sim %>% 
+birds_sim %>% 
   tabyl(pi) %>% 
   adorn_totals("row")
 ```
+These probabilites align very closely to our prior model!
 
+Now, let's check out the probability of the observed hatchling results (y=10):
+```{r}
+birds_10 <- birds_sim %>% 
+  filter(y == 10)
+
+
+# Summarize the posterior approximation
+birds_10 %>% 
+  tabyl(pi) %>% 
+  adorn_totals("row")
+```
+Our simulated values actually line up well with the posterior values we calculated earlier, which were skewed towards \pi=0.65): \pi=0.6: 0.2810746, \pi=0.65: 0.4279781, \pi=0.7: 0.2077325, \pi=0.75: 0.08321478. 

@@ -123,11 +123,11 @@ render_graph(tree)
 ```
 
 ## 1.6
-a. The question answered with frequentist thinking is: what is the probability that someone with the qualifications will get the job, and the converse: what is the probability that someone without the qualifications will get the job.
+a. The questions answered with frequentist thinking is: if I get the job, what's the probability that I was qualified for the position? If I don't get the job, what's the probability that I wasn't qualified for the position?
 
-b. The question answered with Bayesian thinking is: Given that you have the qualifications, what is the probability that you will get the job. 
+b. The question answered with Bayesian thinking is: Given that you have the qualifications, what is the probability that you will get the job? 
 
-c. The Bayesian question is the one I would be interested in, because I know I have the qualifications, so I'm interested in the conditional probability -- that is, in taking into account my qualifications as *prior* information relative to my outcome. 
+c. The Bayesian question is the one I would be interested in, because I know I have the qualifications, so I'm interested in the conditional probability -- that is, in taking into account my qualifications as *prior* information, and assessing the likelihood of the hypothesis given that the data is true. 
 
 ## 1.7
 
@@ -143,7 +143,7 @@ Bayesian statistics is useful because it allows us to calculate probabilities th
 
 
 b. What are the similarities between Bayesian and frequentist statistics? 
-According to BR Chapter 2, "a Bayesian analysis assesses the uncertainty of the hypothesis in light of the observed data, and a frequentist analysis assesses the uncertainty of the observed data in light of an assumed hypothesis." In this sense, both Bayesian and frequentist approaches rely on individual probabilities of events and some "observed data." The analyses differ in their fundamental assumptions--Bayesian assesses the likelihood of the hypothesis being true given the observed data, and frequentist seeks to explore, given an assumed hypothesis, how likely it is that the observed data would in fact be observed.
+Frequentists question the data, Bayesians question the hypothesis. According to BR Chapter 2, "a Bayesian analysis assesses the uncertainty of the hypothesis in light of the observed data, and a frequentist analysis assesses the uncertainty of the observed data in light of an assumed hypothesis." In this sense, both Bayesian and frequentist approaches rely on individual probabilities of events and some "observed data." The analyses differ in their fundamental assumptions--Bayesian assesses the likelihood of the hypothesis being true given the observed data, and frequentist seeks to explore, given an assumed hypothesis, how likely it is that the observed data would in fact be observed.
 
 # Chapter 2 Excercises
 
@@ -180,22 +180,21 @@ The replications are independent, meaning here that a success in one patient doe
 a. The Binomial model is not appropriate for this question because we don't know the probability of an individual baby being born.
 
 b. The Binomial model is as follows:
-$$ Y|\pi \text{~}  Bin(27, \pi)$$
+$$ Y|\pi \text{~}  Bin(27, 0.9)$$
 The conditional pmf is:
 $$ f(y|0.9) = C(27, y)(0.9)^y(0.1)^{27-y} \text { for y in } [0, 1, 2...27] $$
 
-c. The Binomial model is as follows:
-$$ Y|\pi \text{~}  Bin(n, \pi)$$
-The conditional pmf is:
-$$ f(y|0.17) = C(n, y)(0.17)^y(0.83)^{n-y} \text { for y in } [0, 1, 2...n] $$
+c. We cannot use a binomial model, because Y estimates the number of times until Alaska achieves success, not the **number** of successes and failures. 
+
 d. The Binomial model is not appropriate for this question, because there aren't two outcomes: the question is asking for estimates of the *amount* of time Henry is late to the date, not whether he is late. If the question were interested in the *number* of times he were late, then a Binomial model would be appropriate.
 
 e. A Binomial model is not appropriate for this question, because Y is measuring a probability, not a number of outcomes.
 
 f. The Binomial model is as follows:
-$$ Y|\pi \text{~}  Bin(60, \pi)$$
+$$ Y|\pi \text{~}  Bin(60, 0.8)$$
 The conditional pmf is:
 $$ f(y|0.8) = C(60, y)(0.8)^y(0.2)^{60-y} \text { for y in } [0, 1, 2...60] $$
+
 ## 2.4 
 We'll use Theorem 2.3.6 in BH Chapter 2 and Bayes rule:
 
@@ -207,6 +206,7 @@ P_notV=1-P_V
 #prob of sparkle given vamps
 P_S_given_V=0.7
 P_S_given_notV=0.03
+
 
 #use law of total probability to find P(S)
 P_S=P_S_given_notV*P_notV+P_S_given_V*P_V
